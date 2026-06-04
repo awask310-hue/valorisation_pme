@@ -1,6 +1,6 @@
 <?php
 try {
-    $bdd = new PDO("mysql:host=localhost;dbname=nom_de_ta_base", "root", "");
+    $bdd = new PDO("mysql:host=localhost;dbname=valorisation_pme", "root", "");
 } catch (Exception $e) {
     die("Erreur : " . $e->getMessage());
 }
