@@ -5,15 +5,18 @@ try {
     die("Erreur : " . $e->getMessage());
 }
 
+$message = "";
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Vérification : les noms ici doivent correspondre aux 'name' de ton formulaire en bas
-    $req = $bdd->prepare("INSERT INTO produits (nom_entreprise, nom_produit, description) VALUES (?, ?, ?)");
-    $req->execute([
-        $_POST['nom_entreprise'], 
-        $_POST['nom_produit'], 
-        $_POST['description']
-    ]);
-    $message = "Produit enregistré avec succès !";
+    if(isset($_POST['nom_entreprise'], $_POST['nom_produit'], $_POST['description'])) {
+        $req = $bdd->prepare("INSERT INTO produits (nom_entreprise, nom_produit, description) VALUES (?, ?, ?)");
+        $req->execute([
+            $_POST['nom_entreprise'], 
+            $_POST['nom_produit'], 
+            $_POST['description']
+        ]);
+        $message = "Produit enregistré avec succès !";
+    }
 }
 ?>
 
@@ -21,30 +24,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Dashboard</title>
+    <title>Tableau de bord</title>
     <style>
-        body { font-family: Arial, sans-serif; background-color: #ffffff; padding: 20px; }
-        .container { max-width: 500px; margin: 0 auto; border: 1px solid #000; padding: 30px; }
-        .champ-saisie, .zone-description { width: 100%; background-color: #ddd; border: none; border-radius: 15px; padding: 12px; margin-bottom: 25px; box-sizing: border-box; }
-        .zone-description { height: 100px; resize: none; }
-        .bouton-soumettre { width: 100%; background-color: #ddd; border: none; border-radius: 15px; padding: 12px; font-weight: bold; cursor: pointer; }
+        .container { max-width: 500px; margin: 50px auto; padding: 20px; border: 1px solid #ccc; font-family: sans-serif; }
+        .champ { width: 100%; margin-bottom: 15px; padding: 10px; box-sizing: border-box; }
     </style>
 </head>
 <body>
     <div class="container">
         <h2>Ajouter un produit</h2>
-        <?php if(isset($message)) echo "<p style='color:green;'>$message</p>"; ?>
-        <form method="POST">
-            <label>Nom entreprise :</label>
-            <input type="text" name="nom_entreprise" class="champ-saisie" required>
+        <?php if($message) echo "<p style='color:green;'>$message</p>"; ?>
+        
+        <form method="POST" action="">
+            <label>Nom d'entreprise :</label><br>
+            <input type="text" name="nom_entreprise" class="champ" required><br>
 
-            <label>Nom du produit :</label>
-            <input type="text" name="nom_produit" class="champ-saisie" required>
+            <label>Nom du produit :</label><br>
+            <input type="text" name="nom_produit" class="champ" required><br>
 
-            <label>Description :</label>
-            <textarea name="description" class="zone-description" required></textarea>
+            <label>Description :</label><br>
+            <textarea name="description" class="champ" required></textarea><br>
 
-            <button type="submit" class="bouton-soumettre">Enregistrer le produit</button>
+            <button type="submit">Enregistrer le produit</button>
         </form>
     </div>
 </body>
