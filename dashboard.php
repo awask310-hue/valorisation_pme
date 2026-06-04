@@ -6,8 +6,13 @@ try {
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Vérification : les noms ici doivent correspondre aux 'name' de ton formulaire en bas
     $req = $bdd->prepare("INSERT INTO produits (nom_entreprise, nom_produit, description) VALUES (?, ?, ?)");
-    $req->execute([$_POST['nom_entreprise'], $_POST['nom_produit'], $_POST['description']]);
+    $req->execute([
+        $_POST['nom_entreprise'], 
+        $_POST['nom_produit'], 
+        $_POST['description']
+    ]);
     $message = "Produit enregistré avec succès !";
 }
 ?>
