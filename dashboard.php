@@ -8,6 +8,7 @@ try {
 $message = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Les 'name' ici doivent correspondre mot pour mot à ceux du formulaire en dessous
     if(isset($_POST['nom_entreprise'], $_POST['nom_produit'], $_POST['description'])) {
         $req = $bdd->prepare("INSERT INTO produits (nom_entreprise, nom_produit, description) VALUES (?, ?, ?)");
         $req->execute([
